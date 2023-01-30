@@ -41,3 +41,11 @@ $('.tab a').on('click', function (e) {
   $(target).fadeIn(800);
   
 });
+
+$(document).ready(function () {
+
+    var yourPrompt = '@ViewData["PromptMessage"]';
+    if (yourPrompt == "Invalid") {
+        alert("Invalid Credentials supplied");
+    }
+});
