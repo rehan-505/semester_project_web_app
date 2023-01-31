@@ -15,6 +15,8 @@ public partial class FoodDbContext : DbContext
     {
     }
 
+    public virtual DbSet<Product> Products { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -23,6 +25,27 @@ public partial class FoodDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Product>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Product__3214EC0734683467");
+
+            entity.ToTable("Product");
+
+            entity.Property(e => e.Des)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("des");
+            entity.Property(e => e.Image)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("image");
+            entity.Property(e => e.Price).HasColumnName("price");
+            entity.Property(e => e.Title)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("title");
+        });
+
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__User__3214EC075C6AB556");
