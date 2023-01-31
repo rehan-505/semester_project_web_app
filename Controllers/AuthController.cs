@@ -14,7 +14,7 @@ namespace semester_project_web_app.Controllers
         }
 
         [HttpGet]
-        public void signup(Models.User user)
+        public ViewResult signup(Models.User user)
         {
             Console.WriteLine(user.Email);
             Console.WriteLine(user.Pass);
@@ -27,8 +27,9 @@ namespace semester_project_web_app.Controllers
 
                 Console.WriteLine("Email already registered");
                 Response.Redirect("../Auth");
-                return;
-                
+                ViewBag.msg = "Email already registered";
+                return View("Auth");
+
             }
 
 
@@ -36,7 +37,7 @@ namespace semester_project_web_app.Controllers
             foodDbc.Add(user);
             foodDbc.SaveChanges();
             foodDbc.Products.Load();
-            Response.Redirect ("../Home");
+            return View("../Home/Index", foodDbc.Products.ToList());
 
             //return View("home");            
         }
