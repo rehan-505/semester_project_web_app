@@ -1,7 +1,7 @@
 ﻿@model List<semester_project_web_app.Model.Product>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Cart Page";
 }
 
 <!DOCTYPE html>
@@ -82,64 +82,35 @@
 
 <body>
 
-    <div class="col-xs-12 col-md-6">
-        <a class="btn btn-success" href="/Home/goToCart">View Cart</a>
-@*        <input type="button"
-                         style="display: block; width: 100%"
-               value="Go Somewhere Else"
-               onclick="location.href='<%: Url.Action("","HomeController") %>'" />
-*@    </div>
 
- 
-        <div id="products" class="row list-group">
+    <div id="products" class="row list-group">
 
 
-            @foreach(semester_project_web_app.Model.Product m in Model)
-            {
+        @foreach (semester_project_web_app.Model.Product m in Model)
+        {
 
-                <div class="item  col-xs-4 col-lg-4">
-                    <div class="thumbnail">
-                        <img class="group list-group-image" src=@m.Image alt="" />
-                        <div class="caption">
-                            <h4 class="group inner list-group-item-heading">
-                                @m.Title
-                            </h4>
-                            <p class="group inner list-group-item-text">
-                                @m.Des
-                            </p>
+            <div class="item  col-xs-4 col-lg-4">
+                <div class="thumbnail">
+                    <img class="group list-group-image" src=@m.Image alt="" />
+                    <div class="caption">
+                        <h4 class="group inner list-group-item-heading">
+                            @m.Title
+                        </h4>
+                        <p class="group inner list-group-item-text">
+                            @m.Des
+                        </p>
                         <div class="row">
                             <div class="col-xs-12 col-md-6">
                                 <p class="lead">
                                     $@m.Price
                                 </p>
                             </div>
-
-                        </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-md-6">
-                                    <p class="lead
-                                        $@m.Price
-                                    </p>
-                                </div>
-                        <div class="col-xs-12 col-md-6">
-                                <a class="btn btn-success"
-                               asp-controller="Detail" asp-action="Index"
-                               asp-route-itemid=@m.Id>
-                                    Detail
-
-                                </a>  </div>
-                                <div class="col-xs-12 col-md-6">
-                                    <a class="btn btn-success"
-                               href="/Home/AddToCart?userid=1&productId=@m.Id">
-                                    Add to cart
-                                
-                                </a>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
-            }
+            </div>
+        }
 
 
 

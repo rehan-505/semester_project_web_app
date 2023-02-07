@@ -1,0 +1,37 @@
+﻿@model semester_project_web_app.Model.Product
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Console.WriteLine(Model.Id);
+}
+<html>
+<body style="background-color:white">
+
+    <div class="item  col-xs-4 col-lg-4" >
+        <div class="thumbnail">
+            <img class="group list-group-image" src=@Model.Image alt="" />
+            <div class="caption">
+                <h4 class="group inner list-group-item-heading">
+                    @Model.Title
+                </h4>
+                <p class="group inner list-group-item-text">
+                    @Model.Des
+                </p>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <p class="lead">
+                            $@Model.Price
+                        </p>
+                    </div>
+
+                </div>
+           
+            </div>
+        </div>
+    </div>
+    </body>
+
+
+</html>

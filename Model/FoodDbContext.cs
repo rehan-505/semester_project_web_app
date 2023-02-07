@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace semester_project_web_app.Models;
+namespace semester_project_web_app.Model;
 
 public partial class FoodDbContext : DbContext
 {
@@ -15,6 +15,8 @@ public partial class FoodDbContext : DbContext
     {
     }
 
+    public virtual DbSet<CartItem> CartItems { get; set; }
+
     public virtual DbSet<Product> Products { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -25,6 +27,16 @@ public partial class FoodDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<CartItem>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__cartItem__3214EC078396805B");
+
+            entity.ToTable("cartItem");
+
+            entity.Property(e => e.ProductId).HasColumnName("productId");
+            entity.Property(e => e.UserId).HasColumnName("userId");
+        });
+
         modelBuilder.Entity<Product>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Product__3214EC0734683467");
@@ -36,7 +48,6 @@ public partial class FoodDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("des");
             entity.Property(e => e.Image)
-                .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("image");
             entity.Property(e => e.Price).HasColumnName("price");
@@ -48,7 +59,7 @@ public partial class FoodDbContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__User__3214EC075C6AB556");
+            entity.HasKey(e => e.Id).HasName("PK__User__3214EC0770B97FF9");
 
             entity.ToTable("User");
 
@@ -56,6 +67,10 @@ public partial class FoodDbContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("email");
+            entity.Property(e => e.Image)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("image ");
             entity.Property(e => e.Pass)
                 .HasMaxLength(50)
                 .IsUnicode(false)

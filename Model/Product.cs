@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace semester_project_web_app.Models;
+namespace semester_project_web_app.Model;
 
 public partial class Product
 {
