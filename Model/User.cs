@@ -12,4 +12,5 @@ public partial class User
     public string Pass { get; set; } = null!;
 
     public string Image { get; set; } = null!;
+
 }

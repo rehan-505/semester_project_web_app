@@ -25,9 +25,9 @@ namespace semester_project_web_app.Model
             //user.Image = "~/Image/" + fileName;
             //string contentRootPath = webHostEnvironment.ContentRootPath;
             //string path = "";
-            //path = Path.Combine(contentRootPath , "Images");
+            //path = Path.Combine(contentRootPath, "Images");
 
-            
+
 
             //user.ImageFile.ToString();
 

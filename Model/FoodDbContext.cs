@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using SMS.Models;
 
 namespace semester_project_web_app.Model;
 
 public partial class FoodDbContext : DbContext
 {
+    public int userno = 0;
     public FoodDbContext()
     {
     }
@@ -81,4 +83,29 @@ public partial class FoodDbContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    public override int SaveChanges()
+        {
+            ProcessSave();
+            return base.SaveChanges();
+        }
+        private void ProcessSave()
+        {
+            var currentTime = DateTimeOffset.UtcNow;
+            foreach (var entry in ChangeTracker.Entries().Where(e => e.State == EntityState.Added && e.Entity is FullAuditModel))
+            {
+                var entity = entry.Entity as FullAuditModel;
+                entity.CreatedDate = DateTime.Now;
+                entity.CreatedByUserId = userno.ToString();
+                entity.LastModifiedDate = DateTime.Now;
+                entity.LastModifiedUserId = userno.ToString();
+            }
+            foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Modified && e.Entity is FullAuditModel))
+            {
+                var entity = item.Entity as FullAuditModel;
+                entity.LastModifiedDate = DateTime.Now;
+                entity.LastModifiedUserId = userno.ToString();
+                item.Property(nameof(entity.CreatedDate)).IsModified = false;
+                item.Property(nameof(entity.CreatedByUserId)).IsModified = false;
+            }
+        }
 }

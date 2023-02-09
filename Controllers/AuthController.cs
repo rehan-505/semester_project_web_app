@@ -2,12 +2,15 @@
 using Microsoft.Data.SqlClient.DataClassification;
 using Microsoft.EntityFrameworkCore;
 using semester_project_web_app.Model;
+using System.Numerics;
 using System.Text;
 
 namespace semester_project_web_app.Controllers
 {
     public class AuthController : Controller
     {
+
+
 
         private readonly IWebHostEnvironment _webHostEnvironment;
 
@@ -21,12 +24,54 @@ namespace semester_project_web_app.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ViewResult signup(Model.User user)
+        [HttpPost]
+        public ViewResult signup(Model.User user, List<IFormFile> imageFile)
         {
             Console.WriteLine(user.Email);
             Console.WriteLine(user.Pass);
             Console.WriteLine(user.Image);
+
+                string wwwPath = _webHostEnvironment.WebRootPath;
+
+            Console.WriteLine("www path" + wwwPath);
+
+                string path = Path.Combine(wwwPath, "Uploads");
+            Console.WriteLine($"{path}");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+
+
+            Console.WriteLine($"image list length {imageFile.Count}");
+
+
+
+
+
+            foreach (var file in imageFile)
+                {
+
+                Console.WriteLine($"inside in loop, length {imageFile.Count}");
+
+                    var fileName = Path.GetFileName(file.FileName);
+                    user.Image = fileName;
+                    var pathWithFileName = Path.Combine(path, fileName);
+
+                Console.WriteLine($"path with file name: {pathWithFileName}");
+
+
+
+                using (FileStream stream = new
+                        FileStream(pathWithFileName,
+                        FileMode.Create))
+                    {
+                    Console.WriteLine($"copying file");
+
+                    file.CopyTo(stream);
+                    }
+                }
 
 
 
@@ -44,6 +89,7 @@ namespace semester_project_web_app.Controllers
             }
 
 
+            saveUserInCookies(user);
             userRepository.addUser(user,_webHostEnvironment);
             ProductRepository productRepository = new ProductRepository();
 

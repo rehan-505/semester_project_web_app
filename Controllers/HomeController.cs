@@ -41,6 +41,7 @@ namespace semester_project_web_app.Controllers
             ProductId = productId,
             UserId= int.Parse(userId),
             });
+            foodDbContext.userno = int.Parse(userId);
         foodDbContext.SaveChanges();
 
             return View("../Home/Index", foodDbContext.Products.ToList());
